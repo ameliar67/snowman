@@ -18,9 +18,29 @@ def snowman(snowman_word):
     replace "pass" below with your own code
     It should print 'Congratulations, you win!'
     If the player wins and, 
-    'Sorry, you lose! The word was {snowman_word}' if the player loses
+    'Sorry, you lose! The word was {snowman_word}' if the players loses
     """
-    pass
+    wrong_guesses = 0
+    wrong_guesses_list = []
+    word_dict = build_letter_status_dict(snowman_word)
+
+    for letter in snowman_word:
+        if all(word_dict.values()):
+            print("Congratulations, you win!")
+            return
+        letter = get_letter_from_user(word_dict, wrong_guesses_list)
+        if letter not in snowman_word:
+            wrong_guesses+=1
+            wrong_guesses_list.append(letter)
+        else:
+            word_dict[letter] = True
+        print_snowman_graphic(wrong_guesses)
+        print_word_progress_string(snowman_word, word_dict)
+
+    if is_word_guessed(snowman_word, word_dict):
+        print("Congratulations, you win!")
+    else:
+        print(f"Sorry, you lose! The word was {snowman_word}")
 
 
 def print_snowman_graphic(wrong_guesses_count):
